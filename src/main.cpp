@@ -30,6 +30,7 @@ int main()
     Led led4(24);
     Led led5(25);
     DHT11 dht(7);
+    UltraSonic ultrasonic(5, 4);
     LCD lcd(new I2C("/dev/i2c-1", 0x25));
     View view(&led1, &led2, &led3, &led4, &led5, &lcd);
     ClockView clockview(&lcd);
@@ -39,7 +40,7 @@ int main()
     TempHumidService temphumidservice(&temphumidview);
     Controller control(&service, &clockservice, &temphumidservice);
     ClockCheck clockcheck;
-    Listener listener(&modeButton, &powerButton, &clockcheck, &dht, &control);
+    Listener listener(&modeButton, &powerButton, &clockcheck, &dht, &ultrasonic, &control);
 
      while (1)
      {

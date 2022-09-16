@@ -11,12 +11,14 @@ class Service
 {
 private:
     int lightState;
+    int Temp_lightState;
     View *view;
 
 public:
     Service(View *viewer);
     ~Service();
     void updateState(std::string strState);
+    void updateDistance(int distance);
 
 
 };

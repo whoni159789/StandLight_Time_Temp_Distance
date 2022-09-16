@@ -3,6 +3,7 @@
 Service::Service(View *viewer)
 {
     lightState = LIGHT_OFF;
+    Temp_lightState = LIGHT_OFF;
     view = viewer;
 }
 
@@ -116,4 +117,18 @@ void Service::updateState(std::string strState)
             }
         break;
     }
+}
+
+void Service::updateDistance(int distance)
+{
+    if(distance >= 50)
+    {
+        Temp_lightState = lightState;
+        lightState = LIGHT_OFF;
+    }
+    else if( (Temp_lightState != LIGHT_OFF) && (distance > 0 && distance < 50) )
+    {
+        lightState = Temp_lightState;
+    }
+    view->setState(lightState);
 }

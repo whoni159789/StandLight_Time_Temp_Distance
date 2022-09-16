@@ -86,6 +86,7 @@ void View::lightOn1()
 
 void View::lightOn2()
 {
+    light_lcd->backLightOn();
     char buff[30];
     sprintf(buff, "Light 1");
     light_lcd->WriteStringXY(0, 0, buff);
@@ -99,6 +100,7 @@ void View::lightOn2()
 
 void View::lightOn3()
 {
+    light_lcd->backLightOn();
     char buff[30];
     sprintf(buff, "Light 3");
     light_lcd->WriteStringXY(0, 0, buff);
@@ -112,6 +114,7 @@ void View::lightOn3()
 
 void View::lightOn4()
 {
+    light_lcd->backLightOn();
     char buff[30];
     sprintf(buff, "Light 4");
     light_lcd->WriteStringXY(0, 0, buff);
@@ -125,6 +128,7 @@ void View::lightOn4()
 
 void View::lightOn5()
 {
+    light_lcd->backLightOn();
     char buff[30];
     sprintf(buff, "Light 5");
     light_lcd->WriteStringXY(0, 0, buff);
@@ -138,6 +142,7 @@ void View::lightOn5()
 
 void View::lightWarning()
 {
+    light_lcd->backLightOn();
     char buff[30];
     sprintf(buff, "WARNING");
     light_lcd->WriteStringXY(0, 0, buff);
