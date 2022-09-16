@@ -18,6 +18,7 @@ add_executable(${PROJECT_NAME}
     ./src/hw/LCD/LCD.cpp
     ./src/hw/I2C/I2C.cpp
     ./src/hw/DHT11/DHT11.cpp
+    ./src/hw/UltraSonic/UltraSonic.cpp
 )
 
 target_include_directories(${PROJECT_NAME} PUBLIC
@@ -31,6 +32,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC
     ./src/hw/LCD
     ./src/hw/I2C
     ./src/hw/DHT11
+    ./src/hw/UltraSonic
 )
 
 target_link_libraries(${PROJECT_NAME} PUBLIC
