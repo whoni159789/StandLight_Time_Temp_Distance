@@ -88,7 +88,7 @@ void View::lightOn2()
 {
     light_lcd->backLightOn();
     char buff[30];
-    sprintf(buff, "Light 1");
+    sprintf(buff, "Light 2");
     light_lcd->WriteStringXY(0, 0, buff);
 
     light1->On();

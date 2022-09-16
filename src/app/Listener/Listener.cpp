@@ -1,5 +1,6 @@
 #include "Listener.h"
 #include "wiringPi.h"
+#include <stdio.h>
 
 Listener::Listener(Button *modebutton, Button *powerbutton, ClockCheck *clock, 
                     DHT11 *dht11, UltraSonic *ultrasonic, Controller *control)
@@ -48,6 +49,7 @@ void Listener::checkEvent()
         prevUltrasnoicTime = millis();
         int distance = ultrasonic->readDistance();
         controller->updateDistance(distance);
+        printf("Distance : %d\n", distance);
     }
 
 }

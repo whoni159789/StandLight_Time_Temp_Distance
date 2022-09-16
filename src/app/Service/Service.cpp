@@ -1,4 +1,5 @@
 #include "Service.h"
+#include <stdio.h>
 
 Service::Service(View *viewer)
 {
@@ -17,96 +18,116 @@ void Service::updateState(std::string strState)
     switch (lightState)
     {
         case LIGHT_OFF:
-            if (strState == "modeButton") 
+            if(Temp_lightState == LIGHT_READY)
             {
-                lightState = LIGHT_1;
+                if (strState == "modeButton") 
+                {
+                    lightState = LIGHT_1;
+                }
+                view->setState(lightState);
             }
-            if (strState == "warningTemp") 
-            {
-                lightState = LIGNT_WARNING;
-            }
-            view->setState(lightState);
+            
 
         break;
 
         case LIGHT_1:
-            if (strState == "modeButton") 
+            if(Temp_lightState == LIGHT_READY)
             {
-                lightState = LIGHT_2;
+                if (strState == "modeButton") 
+                {
+                    lightState = LIGHT_2;
+                }
+                if (strState == "powerButton") 
+                {
+                    lightState = LIGHT_OFF;
+                }
+                if (strState == "warningTemp") 
+                {
+                    lightState = LIGNT_WARNING;
+                }
+                view->setState(lightState);
             }
-            if (strState == "powerButton") 
-            {
-                lightState = LIGHT_OFF;
-            }
-            if (strState == "warningTemp") 
-            {
-                lightState = LIGNT_WARNING;
-            }
-            view->setState(lightState);
+            
         break;
 
         case LIGHT_2:
-            if (strState == "modeButton") 
+            if(Temp_lightState == LIGHT_READY)
             {
-                lightState = LIGHT_3;
+                if (strState == "modeButton") 
+                {
+                    lightState = LIGHT_3;
+                }
+                if (strState == "powerButton") 
+                {
+                    lightState = LIGHT_OFF;
+                }
+                if (strState == "warningTemp") 
+                {
+                    lightState = LIGNT_WARNING;
+                }
+                view->setState(lightState);
             }
-            if (strState == "powerButton") 
-            {
-                lightState = LIGHT_OFF;
-            }
-            if (strState == "warningTemp") 
-            {
-                lightState = LIGNT_WARNING;
-            }
-            view->setState(lightState);
+            
         break;
 
         case LIGHT_3:
-            if (strState == "modeButton") 
+            if(Temp_lightState == LIGHT_READY)
             {
-                lightState = LIGHT_4;
+                if (strState == "modeButton") 
+                {
+                    lightState = LIGHT_4;
+                }
+                if (strState == "powerButton") 
+                {
+                    lightState = LIGHT_OFF;
+                }
+                if (strState == "warningTemp") 
+                {
+                    lightState = LIGNT_WARNING;
+                }
+                view->setState(lightState);
             }
-            if (strState == "powerButton") 
-            {
-                lightState = LIGHT_OFF;
-            }
-            if (strState == "warningTemp") 
-            {
-                lightState = LIGNT_WARNING;
-            }
-            view->setState(lightState);
+            
         break;
 
         case LIGHT_4:
-            if (strState == "modeButton") 
+            if(Temp_lightState == LIGHT_READY)
             {
-                lightState = LIGHT_5;
+                if (strState == "modeButton") 
+                {
+                    lightState = LIGHT_5;
+                }
+                if (strState == "powerButton") 
+                {
+                    lightState = LIGHT_OFF;
+                }
+                if (strState == "warningTemp") 
+                {
+                    lightState = LIGNT_WARNING;
+                }
+                view->setState(lightState);
             }
-            if (strState == "powerButton") 
-            {
-                lightState = LIGHT_OFF;
-            }
-            if (strState == "warningTemp") 
-            {
-                lightState = LIGNT_WARNING;
-            }
-            view->setState(lightState);
+            
         break;
 
         case LIGHT_5:
-            if (strState == "modeButton") 
+            if(Temp_lightState == LIGHT_READY)
             {
-                lightState = LIGHT_OFF;
+                if (strState == "modeButton") 
+                {
+                    lightState = LIGHT_OFF;
+                }
+                if (strState == "powerButton") 
+                {
+                    lightState = LIGHT_OFF;
+                }
+                if (strState == "warningTemp") 
+                {
+                    lightState = LIGNT_WARNING;
+                }
+                view->setState(lightState);
             }
-            if (strState == "powerButton") 
-            {
-                lightState = LIGHT_OFF;
-            }
-            if (strState == "warningTemp") 
-            {
-                lightState = LIGNT_WARNING;
-            }
-            view->setState(lightState);
+
         break;
 
         case LIGNT_WARNING:
@@ -121,14 +142,24 @@ void Service::updateState(std::string strState)
 
 void Service::updateDistance(int distance)
 {
-    if(distance >= 50)
+    static unsigned int count = 0;
+    
+    if(Temp_lightState == LIGHT_READY && distance >= 20)
     {
-        Temp_lightState = lightState;
-        lightState = LIGHT_OFF;
+        count++;
+        printf("카운트 : %d\n", count);
+        if(count >= 5)
+        {
+            Temp_lightState = lightState;
+            lightState = LIGHT_OFF;
+            count = 0;
+        }
+        
     }
-    else if( (Temp_lightState != LIGHT_OFF) && (distance > 0 && distance < 50) )
+    else if(Temp_lightState != LIGHT_READY && distance > 0 && distance < 20)
     {
         lightState = Temp_lightState;
+        Temp_lightState = LIGHT_READY;
     }
     view->setState(lightState);
 }
